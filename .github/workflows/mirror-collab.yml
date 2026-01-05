@@ -1,0 +1,33 @@
+name: Mirror collab notebook
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checkout-single-dir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: mirror
+
+      - name: Download notebook
+        run: |
+          sh ./mirror-notebook.sh
+
+      - name: Commit changes
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+          git add .
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Nightly: sync notebook"
+            git push origin HEAD:mirror
+          else
+            echo "No changes to commit"
+          fi
