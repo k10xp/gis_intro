@@ -2,9 +2,11 @@ name: Mirror collab notebook
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * *"
 
 jobs:
-  checkout-single-dir:
+  create-copy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current repository
