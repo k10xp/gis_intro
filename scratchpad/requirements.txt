@@ -1,0 +1,13 @@
+#jupyter notebook
+ipykernel
+
+pandas
+matplotlib
+geopandas
+
+pyarrow
+pyspark
+apache-sedona
+
+#or install pyspark + sedona
+# apache-sedona[spark]
